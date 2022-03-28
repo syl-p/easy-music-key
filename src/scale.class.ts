@@ -1,4 +1,4 @@
-export default class Scale {
+export default class ScaleClass {
     static sharp_text = "♯";
     static flat_text = "♭";
     static all_natural_notes: string[] = [
@@ -12,24 +12,24 @@ export default class Scale {
     ];
 
     static sharps_list: string[] = [
-        "F♯",
-        "C♯",
-        "G♯",
-        "D♯",
-        "A♯",
-        "E♯",
-        "B♯"
-    ];
+        "F",
+        "C",
+        "G",
+        "D",
+        "A",
+        "E",
+        "B"
+    ].map(note => note + ScaleClass.sharp_text);
 
     static flats_list: string[] = [
-        "B♭",
-        "E♭",
-        "A♭",
-        "D♭",
-        "G♭",
-        "C♭",
-        "F♭"
-    ];
+        "B",
+        "E",
+        "A",
+        "D",
+        "G",
+        "C",
+        "F"
+    ].map(note => note + ScaleClass.flat_text);
 
     static mode_names: string[] = [
         "ionian",
@@ -72,13 +72,10 @@ export default class Scale {
         },
     ];
 
-    // static scale_steps: number[] = [2, 3, 1, 2, 2, 2, 1];
-
     static get_alterations(key: string): string[] {
-        const with_b: boolean = key.includes(Scale.flat_text) || key === 'F';
-        const circle: string[] = with_b ? Scale.flats_list : Scale.sharps_list;
-        const alteration_text = with_b ? Scale.flat_text : Scale.sharp_text;
-        const key_string_to_check = !with_b ? key.replace(Scale.sharp_text, '') : key;
+        const with_b: boolean = key.includes(ScaleClass.flat_text) || key === 'F';
+        const circle: string[] = with_b ? ScaleClass.flats_list : ScaleClass.sharps_list;
+        const key_string_to_check = !with_b ? key.replace(ScaleClass.sharp_text, '') : key;
 
         const circle_index: number = circle.findIndex(note => (with_b ? note : note.slice(0, -1)) == key_string_to_check);
 
@@ -94,41 +91,25 @@ export default class Scale {
     }
 
     static get_major_scale_from_key(key: string): string[] {
+        const with_b: boolean = key.includes(ScaleClass.flat_text) || key === 'F';
+        const alteration_text = with_b ? ScaleClass.flat_text : ScaleClass.sharp_text;
         const notes_for_scale: string[] = []
-        const with_b: boolean = key.includes(Scale.flat_text) || key === 'F';
 
+        const sharpsOrFlats: string[] = ScaleClass.get_alterations(key);
 
-        // Find major scale with circle of fifths or with flat
-        const circle: string[] = with_b ? Scale.flats_list : Scale.sharps_list;
-        const alteration_text = with_b ? Scale.flat_text : Scale.sharp_text;
-        const key_string_to_check = !with_b ? key.replace(Scale.sharp_text, '') : key;
-
-        const circle_index: number = circle.findIndex(note => (with_b ? note : note.slice(0, -1)) == key_string_to_check);
-
-
-        let sharpsOrFlats: string[] = []
-        if (circle_index === -1) {
-            sharpsOrFlats = with_b ? [circle[0]] : circle
-        } else {
-            sharpsOrFlats = circle.slice(0, with_b ? circle_index + 2 : circle_index - 1);
-        }
-
-        console.log(sharpsOrFlats);
-
-        const index_in_natural_notes: number = Scale.all_natural_notes
+        const index_in_natural_notes: number = ScaleClass.all_natural_notes
             .findIndex(note => note == key.replace(alteration_text, ''));
 
         notes_for_scale.push(key) // Push the first note
 
-
         // LOOP
         for (let i = 1; i < 7; i++) {
             let note_index = index_in_natural_notes + i;
-            if (note_index >= Scale.all_natural_notes.length) {
-                note_index -= Scale.all_natural_notes.length;
+            if (note_index >= ScaleClass.all_natural_notes.length) {
+                note_index -= ScaleClass.all_natural_notes.length;
             }
 
-            const note = sharpsOrFlats.includes(Scale.all_natural_notes[note_index] + alteration_text) ? Scale.all_natural_notes[note_index] + alteration_text : Scale.all_natural_notes[note_index];
+            const note = sharpsOrFlats.includes(ScaleClass.all_natural_notes[note_index] + alteration_text) ? ScaleClass.all_natural_notes[note_index] + alteration_text : ScaleClass.all_natural_notes[note_index];
             notes_for_scale.push(note)
         }
         // END LOOP
@@ -139,10 +120,10 @@ export default class Scale {
     static get_degrees(key: string) {
         const degrees: { notation: string, roman: string }[] = [];
 
-        Scale.get_major_scale_from_key(key).forEach((note, index) => {
+        ScaleClass.get_major_scale_from_key(key).forEach((note, index) => {
             const degree = {
-                notation: note + ' ' + Scale.degree_names[index].notation,
-                roman: Scale.degree_names[index].name
+                notation: note + ' ' + ScaleClass.degree_names[index].notation,
+                roman: ScaleClass.degree_names[index].name
             }
             degrees.push(degree);
         });
@@ -152,7 +133,7 @@ export default class Scale {
 
     static get_modes(key: string) {
         const modes: { name: string, notes: string[] }[] = [];
-        const scale = Scale.get_major_scale_from_key(key);
+        const scale = ScaleClass.get_major_scale_from_key(key);
 
         scale.forEach((note, index) => {
 
@@ -161,7 +142,7 @@ export default class Scale {
             notes = [...scale.slice(index, scale.length), ...scale.slice(0, index)];
 
             const mode = {
-                name: Scale.mode_names[index],
+                name: ScaleClass.mode_names[index],
                 notes
             }
 
@@ -176,12 +157,11 @@ export default class Scale {
     public degrees: { notation: string, roman: string }[];
     public modes: { name: string, notes: string[] }[];
 
-
     constructor(key: string) {
         this.key = key;
-        this.all_notes = Scale.get_major_scale_from_key(key);
-        this.degrees = Scale.get_degrees(key);
-        this.modes = Scale.get_modes(key);
-        this.alterations = Scale.get_alterations(key)
+        this.all_notes = ScaleClass.get_major_scale_from_key(key);
+        this.degrees = ScaleClass.get_degrees(key);
+        this.modes = ScaleClass.get_modes(key);
+        this.alterations = ScaleClass.get_alterations(key)
     }
 }

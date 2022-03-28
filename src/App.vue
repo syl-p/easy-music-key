@@ -49,9 +49,9 @@
 </template>
 
 <script setup lang="ts">
-  import {ref, computed, watch} from "vue";
+import {ref, computed, watch, onMounted} from "vue";
   import ModeElement from "./components/ModeElement.vue";
-  import Scale from "@/scale";
+  import Scale from "@/scale.class";
 
   import useStore from '@/stores/main';
   const store = useStore();
@@ -72,19 +72,12 @@
       'C♭',
   ];
 
-  const key = ref({ fonda: 'D',
-                                                            type: 'major'
-  });
+  const key = ref({ fonda: 'D', type: 'major' });
 
   const scale = computed((): Scale => {
     return new Scale(key.value.fonda);
   });
 
-  watch(key, (newValue, oldValue) => {
-    if (!Scale.all_natural_notes.includes(newValue.fonda)) {
-      key.value.fonda.slice(key.value.fonda.length, 1);
-    }
-  });
 </script>
 
 <style>

@@ -4,14 +4,13 @@
       {{degree.roman}}
     </div>
     <div class="mode__infos">
-      <h2>
+      <h2 @click="playSound(mode.notes, store.view === 'degrees')">
         <template v-if="store.view === 'modes'">
           <span>{{ mode.name }}</span>
         </template>
         <template v-else>
           <span>{{ degree.notation }}</span>
         </template> &nbsp;
-
         <small>Sound Major</small>
       </h2>
       <ul class="mode__notes">
@@ -49,6 +48,14 @@ const store = useStore();
      })
    }
  })
+
+function playSound(notes: string[], isDegree: boolean) {
+  if (isDegree) {
+    store.tone.play_chord(notes);
+  } else {
+    store.tone.play_arpeggio(notes);
+  }
+}
 
 </script>
 
