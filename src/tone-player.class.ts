@@ -20,13 +20,16 @@ export default class TonePlayerClass {
         "Cb6", "C6"];
 
     public play_chord(notes: string[]) {
-        this.check_alteration_font_and_add_octaves(notes).forEach(note => {
-            this.synth.triggerAttackRelease(note, "8n");
-        });
+        const synth = new Tone.PolySynth().toDestination();
+        synth.triggerAttackRelease(notes, 1);
     }
 
     public play_arpeggio(notes: string[]) {
-        console.log(this.check_alteration_font_and_add_octaves(notes))
+        const now = Tone.now();
+        const synth = new Tone.Synth().toDestination();
+        this.check_alteration_font_and_add_octaves(notes).forEach((note, index) => {
+            synth.triggerAttackRelease(note, "8n", now + (index / 2));
+        });
     }
 
     private check_alteration_font_and_add_octaves(notes: string[]): string[] {
@@ -39,7 +42,6 @@ export default class TonePlayerClass {
 
 
         const array_splice = this.two_octave_notes_range.slice(index, this.two_octave_notes_range.length);
-        console.log(index, array_splice);
 
         notes.forEach(note => {
             const note_with_octave: string | undefined = array_splice.find(range_note => range_note.slice(0, -1) === note);
@@ -52,6 +54,7 @@ export default class TonePlayerClass {
     }
 
     constructor() {
-        this.synth = new Tone.Synth().toDestination();
+        const synth = new Tone.Synth().toDestination();
+        this.synth = synth
     }
 }
