@@ -4,7 +4,7 @@
       {{degree.roman}}
     </div>
     <div class="mode__infos">
-      <h2 @click="playSound(mode.notes, store.view === 'degrees')">
+      <h2 @click="playSound(store.view === 'degrees' ? degree.notes : mode.notes, store.view === 'degrees')">
         <template v-if="store.view === 'modes'">
           <span>{{ mode.name }}</span>
         </template>
@@ -15,7 +15,7 @@
       </h2>
       <ul class="mode__notes">
         <li v-for="(note, index) in mode.notes" :key="note"
-            :class="{'active': [0, 2, 4, 6].includes(index)}">
+            :class="{'active': degree.notes.includes(note)}">
           {{ note }}
         </li>
       </ul>

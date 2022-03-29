@@ -118,12 +118,14 @@ export default class ScaleClass {
     }
 
     static get_degrees(key: string) {
-        const degrees: { notation: string, roman: string }[] = [];
+        const degrees: { notation: string, roman: string, notes: string[] }[] = [];
 
         ScaleClass.get_major_scale_from_key(key).forEach((note, index) => {
+            const mode_notes: string[] = ScaleClass.get_modes(key)[index].notes
             const degree = {
                 notation: note + ' ' + ScaleClass.degree_names[index].notation,
-                roman: ScaleClass.degree_names[index].name
+                roman: ScaleClass.degree_names[index].name,
+                notes: mode_notes.filter((note, index) => [0, 2, 4, 6].includes(index))
             }
             degrees.push(degree);
         });

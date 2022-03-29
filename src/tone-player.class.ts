@@ -21,7 +21,7 @@ export default class TonePlayerClass {
 
     public play_chord(notes: string[]) {
         const synth = new Tone.PolySynth().toDestination();
-        synth.triggerAttackRelease(notes, 1);
+        synth.triggerAttackRelease(this.check_alteration_font_and_add_octaves(notes), 1);
     }
 
     public play_arpeggio(notes: string[]) {
@@ -54,7 +54,5 @@ export default class TonePlayerClass {
     }
 
     constructor() {
-        const synth = new Tone.Synth().toDestination();
-        this.synth = synth
     }
 }
