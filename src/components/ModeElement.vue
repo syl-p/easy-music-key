@@ -53,7 +53,7 @@ function playSound(notes: string[], isDegree: boolean) {
   if (isDegree) {
     store.tone.play_chord(notes);
   } else {
-    store.tone.play_arpeggio(notes);
+    store.tone.play_note_by_note(notes);
   }
 }
 

@@ -23,12 +23,12 @@ export default class TonePlayerClass {
         const synth = new Tone.PolySynth().toDestination();
         synth.triggerAttackRelease(this.check_alteration_font_and_add_octaves(notes), 1);
     }
-
-    public play_arpeggio(notes: string[]) {
+    
+    public play_note_by_note(notes: string[]) {
         const now = Tone.now();
         const synth = new Tone.Synth().toDestination();
         this.check_alteration_font_and_add_octaves(notes).forEach((note, index) => {
-            synth.triggerAttackRelease(note, "8n", now + (index / 2));
+            synth.triggerAttackRelease(note, "8n", now + (index / 2), 0.6);
         });
     }
 
