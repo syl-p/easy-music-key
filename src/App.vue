@@ -82,6 +82,7 @@ import {ref, computed, watch, onMounted} from "vue";
 
 <style>
 @import "./assets/base.css";
+@import "../node_modules/@mdi/font/css/materialdesignicons.css";
 
 #app {
   max-width: 1280px;
@@ -214,7 +215,7 @@ a,
 
   main {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 0.7fr 2fr;
     padding: 0 2rem;
   }
 

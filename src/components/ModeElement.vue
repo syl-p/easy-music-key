@@ -1,16 +1,20 @@
 <template>
-  <div class="mode" :class="{'degrees': store.view === 'degrees'}">
+  <div v-if="store.tone" class="mode" :class="{'degrees': store.view === 'degrees'}">
     <div class="mode__index">
       {{degree.roman}}
     </div>
     <div class="mode__infos">
-      <h2 @click="playSound(store.view === 'degrees' ? degree.notes : mode.notes, store.view === 'degrees')">
+      <h2>
         <template v-if="store.view === 'modes'">
           <span>{{ mode.name }}</span>
         </template>
         <template v-else>
           <span>{{ degree.notation }}</span>
         </template> &nbsp;
+        <a href="#" 
+          @click="playSound(store.view === 'degrees' ? degree.notes : mode.notes, store.view === 'degrees')">
+          <i class="mdi mdi-volume-high"></i>
+        </a>&nbsp;
         <small>Sound Major</small>
       </h2>
       <ul class="mode__notes">
@@ -62,16 +66,17 @@ function playSound(notes: string[], isDegree: boolean) {
 <style>
 
   .mode {
+    padding: 10px 30px;
     margin-bottom: 40px;
     display: grid;
-    grid-template-columns: 0.5fr 2fr;
+    grid-template-columns: 0.5fr 3fr;
     align-content: center;
     justify-content: center;
     align-items: center;
   }
 
   .mode__index {
-    font-size: 3em;
+    font-size: 2.7em;
     font-weight: bold;
     text-align: center;
   }
@@ -89,6 +94,7 @@ function playSound(notes: string[], isDegree: boolean) {
 
   .mode h2 small {
     font-size: 0.8rem;
+    text-transform: uppercase;
   }
 
   .mode p {
@@ -112,6 +118,11 @@ function playSound(notes: string[], isDegree: boolean) {
 
   .mode__notes li:nth-child(1) {
     margin: 0;
+  }
+
+
+  .degrees h2 {
+    text-transform: none;
   }
 
   .degrees .mode__notes li {

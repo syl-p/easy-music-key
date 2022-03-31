@@ -1,7 +1,9 @@
 import * as Tone from "tone";
 
 export default class TonePlayerClass {
-    public synth: Tone.Synth;
+    static synth: Tone.Synth = new Tone.Synth().toDestination();
+    static poly_synth: Tone.PolySynth = new Tone.PolySynth().toDestination();
+
     private two_octave_notes_range: string[] = [
         "Cb4", "C4", "C#4",
         "Db4", "D4", "D#4",
@@ -20,15 +22,15 @@ export default class TonePlayerClass {
         "Cb6", "C6"];
 
     public play_chord(notes: string[]) {
-        const synth = new Tone.PolySynth().toDestination();
-        synth.triggerAttackRelease(this.check_alteration_font_and_add_octaves(notes), 1);
+        const now = Tone.now();
+        this.play_note_by_note(notes, now)
+        TonePlayerClass.poly_synth.triggerAttackRelease(this.check_alteration_font_and_add_octaves(notes), 1, now + 2);
     }
     
-    public play_note_by_note(notes: string[]) {
-        const now = Tone.now();
-        const synth = new Tone.Synth().toDestination();
+    public play_note_by_note(notes: string[], time: number) {
+        const now = time ? time : Tone.now();
         this.check_alteration_font_and_add_octaves(notes).forEach((note, index) => {
-            synth.triggerAttackRelease(note, "8n", now + (index / 2), 0.6);
+            TonePlayerClass.synth.triggerAttackRelease(note, "8n", now + (index / 2), 0.6);
         });
     }
 
