@@ -68,7 +68,7 @@ export default class ScaleClass {
         },
         {
             name: 'VII',
-            notation: 'dim'
+            notation: 'ø (m7♭5)'
         },
     ];
 
