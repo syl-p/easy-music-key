@@ -9,7 +9,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@mdi/font": "^6.6.96",
     "pinia": "^2.0.12",
+    "tone": "^14.7.77",
     "vue": "^3.2.31"
   },
   "devDependencies": {
