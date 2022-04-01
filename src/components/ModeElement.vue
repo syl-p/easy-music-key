@@ -18,7 +18,7 @@
         <small>Sound Major</small>
       </h2>
       <ul class="mode__notes">
-        <li v-for="(note, index) in mode.notes" :key="note"
+        <li v-for="note in mode.notes" :key="note"
             :class="{'active': degree.notes.includes(note)}">
           {{ note }}
         </li>

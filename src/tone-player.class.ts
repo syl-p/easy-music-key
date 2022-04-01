@@ -27,7 +27,7 @@ export default class TonePlayerClass {
         TonePlayerClass.poly_synth.triggerAttackRelease(this.check_alteration_font_and_add_octaves(notes), 1, now + 2);
     }
     
-    public play_note_by_note(notes: string[], time: number) {
+    public play_note_by_note(notes: string[], time?: number) {
         const now = time ? time : Tone.now();
         this.check_alteration_font_and_add_octaves(notes).forEach((note, index) => {
             TonePlayerClass.synth.triggerAttackRelease(note, "8n", now + (index / 2), 0.6);
