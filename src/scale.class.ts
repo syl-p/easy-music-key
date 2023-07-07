@@ -31,44 +31,72 @@ export default class ScaleClass {
         "F"
     ].map(note => note + ScaleClass.flat_text);
 
-    static mode_names: string[] = [
-        "ionian",
-        "dorian",
-        "phrygian",
-        "lydian",
-        "mixolydian",
-        "aeolian",
-        "locrian",
+    static modes: {name: string, description: string}[] = [
+        {
+            name: "ionian",
+            description: 'Very happy and proud'
+        },
+        {
+            name: "dorian",
+            description: "Jazzy style"
+        },
+        {
+            name: "phrygian",
+            description: "Spanish or andalusian"
+        },
+        {
+            name: "lydian",
+            description: "Fantastic and magical "
+        },
+        {
+            name: "mixolydian",
+            description: "Sound Major but bluesy"
+        },
+        {
+            name: "aeolian",
+            description: "calm and melancholy sound"
+        },
+        {
+            name: "locrian",
+            description: "dark and unstable"
+        }
     ];
 
-    static degree_names: { name: string, notation: string }[] = [
+    static degrees: { name: string, notation: string, description: string }[] = [
         {
             name: 'I',
-            notation: 'M7'
+            notation: 'M7',
+            description: 'Sound Major'
         },
         {
             name: 'II',
-            notation: 'm'
+            notation: 'm7',
+            description: 'Sound Minor'
         },
         {
             name: 'III',
-            notation: 'm'
+            notation: 'm7',
+            description: 'Sound Minor'
         },
         {
             name: 'IV',
-            notation: 'M7'
+            notation: 'M7',
+            description: 'Sound Major'
         },
         {
             name: 'V',
-            notation: '7'
+            notation: '7',
+            description: 'Sound Major'
         },
         {
             name: 'VI',
-            notation: 'm'
+            notation: 'm7',
+            description: 'Sound Minor'
         },
         {
             name: 'VII',
-            notation: 'ø (m7♭5)'
+            notation: 'ø (m7♭5)',
+            description: 'Sound Minor and diminished'
         },
     ];
 
@@ -118,13 +146,14 @@ export default class ScaleClass {
     }
 
     static get_degrees(key: string) {
-        const degrees: { notation: string, roman: string, notes: string[] }[] = [];
+        const degrees: { notation: string, roman: string, notes: string[], description: string }[] = [];
 
         ScaleClass.get_major_scale_from_key(key).forEach((note, index) => {
             const mode_notes: string[] = ScaleClass.get_modes(key)[index].notes
             const degree = {
-                notation: note + ' ' + ScaleClass.degree_names[index].notation,
-                roman: ScaleClass.degree_names[index].name,
+                notation: note + '' + ScaleClass.degrees[index].notation,
+                roman: ScaleClass.degrees[index].name,
+                description: ScaleClass.degrees[index].description,
                 notes: mode_notes.filter((note, index) => [0, 2, 4, 6].includes(index))
             }
             degrees.push(degree);
@@ -144,8 +173,8 @@ export default class ScaleClass {
             notes = [...scale.slice(index, scale.length), ...scale.slice(0, index)];
 
             const mode = {
-                name: ScaleClass.mode_names[index],
-                notes
+                ...ScaleClass.modes[index],
+                notes,
             }
 
             modes.push(mode);

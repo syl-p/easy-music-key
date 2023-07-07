@@ -11,11 +11,10 @@
         <template v-else>
           <span>{{ degree.notation }}</span>
         </template> &nbsp;
-        <a href="#" 
-          @click="playSound(store.view === 'degrees' ? degree.notes : mode.notes, store.view === 'degrees')">
+        <a href="#" @click="playSound(store.view === 'degrees' ? degree.notes : mode.notes, store.view === 'degrees')">
           <i class="mdi mdi-volume-high"></i>
         </a>&nbsp;
-        <small>Sound Major</small>
+        <small>{{store.view === 'degrees' ? degree.description : mode.description}}</small>
       </h2>
       <ul class="mode__notes">
         <li v-for="note in mode.notes" :key="note"
@@ -87,6 +86,7 @@ function playSound(notes: string[], isDegree: boolean) {
 
   .mode h2 {
     font-size: 1.4rem;
+    line-height: 1.4rem;
     margin-bottom: 0px;
     text-transform: uppercase;
     font-weight: bold;
