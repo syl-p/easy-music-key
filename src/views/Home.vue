@@ -1,50 +1,49 @@
 <template>
     <aside class="keys">
-        <div>
-          <h2>{{key.fonda}}</h2>
-          <label>Choose your key here: </label>
-        </div>
-  
-        <div class="wrapper">
-        </div>
-  
+        <h2>
+          {{route.params.key ? route.params.key : 'pick a key'}}
+        </h2>
         <ul class="keys-list">
-          <li v-for="(item) in keys" :key="item">
-            <a href="" @click.prevent="key.fonda = item" :class="{'active': item === key.fonda}">{{ item }}</a>
+          <li v-for="item in keys" :key="item">
+            <RouterLink :to="'/' + item">{{item}}</RouterLink>
           </li>
         </ul>
     </aside>
-    <section v-if="scale">
+    <section>
         <nav>
             <ul>
-            <li>
-                <a href="#" @click="store.setView('modes')" :class="{'active': store.view === 'modes'}">
-                Modes
-                </a>
-            </li>
-            <li>
-                <a href="#" @click="store.setView('degrees')" :class="{'active': store.view === 'degrees'}">
-                Degrees
-                </a>
-            </li>
+              <li>
+                <RouterLink to="/degree">Degree</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/mode">Mode</RouterLink>
+              </li>
             </ul>
         </nav>
-        <article>
-            <ModeElement v-for="index in 7"
-                        :mode="scale.modes[index - 1]"
-                        :degree="scale.degrees[index - 1]"
-                        :key="index"></ModeElement>
+        <article v-if="scale">
+          <RouterView />
         </article>
     </section>
   </template>
   
   <script setup lang="ts">
-  import {ref, computed, watch, onMounted} from "vue";
-    import ModeElement from "../components/ModeElement.vue";
+    import {ref, watch, type Ref} from "vue";
     import Scale from "@/scale.class";
-  
     import useStore from '@/stores/main';
+    import { RouterView } from "vue-router";
+    import { useRoute } from 'vue-router'
+
+    const scale = ref(null);
     const store = useStore();
+    const route = useRoute()
+
+    watch(() => route.params.key, (newId, oldId) => {
+      if(newId) {
+        scale.value = new Scale(newId as string)
+      } else {
+        scale.value = null
+      }
+    })
   
     const keys = [
         'F',
@@ -61,13 +60,6 @@
         'G♭',
         'C♭',
     ];
-  
-    const key = ref({ fonda: 'D', type: 'major' });
-  
-    const scale = computed((): Scale => {
-      return new Scale(key.value.fonda);
-    });
-  
   </script>
   
   <style>
@@ -96,7 +88,7 @@
   section nav ul li a.active {
     color: var(--vt-c-green);
   }
-  
+
   aside {
     display: flex;
     flex-direction: column;

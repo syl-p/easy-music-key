@@ -2,8 +2,8 @@
   <main>
     <header>
       <nav>
-        <RouterLink to="/">Go to Home</RouterLink>
-        <RouterLink to="/about">Go to About</RouterLink>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
       </nav>
     </header>
     <RouterView />
