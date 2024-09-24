@@ -1,20 +1,23 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from "@/views/Home.vue"
-import About from "@/views/About.vue"
-import ModeElement from './components/ModeElement.vue'
+import { createRouter, createWebHashHistory } from "vue-router";
+import Home from "@/views/Home.vue";
+import About from "@/views/About.vue";
+import Elements from "@/components/Elements.vue";
 
 const routes = [
-  { path: '/', component: Home, children: [
-    {path: '/:key', component: ModeElement},
-    {path: '/:key/degree', component: ModeElement},
-    {path: '/:key/mode', component: ModeElement},
-  ]},
-  { path: '/about', component: About },
-]
+  {
+    path: "/",
+    component: Home,
+    children: [
+      { path: "/:key", component: Elements },
+      { path: "/:key/:view", component: Elements },
+    ],
+  },
+  { path: "/about", component: About },
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-})
+});
 
-export default router
+export default router;

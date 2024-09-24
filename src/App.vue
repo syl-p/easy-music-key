@@ -1,23 +1,18 @@
 <template>
   <main>
-    <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </header>
     <RouterView />
   </main>
-
   <footer class="footer_copyright text-center">
-    <p>Built with <span class="text-error">♥</span>
-      by <a target="_blank" href="https://www.linkedin.com/in/websylvain/">Sylvain Pastor</a>.</p>
+    <p>
+      Built with <span class="text-error">♥</span> by
+      <a target="_blank" href="https://www.linkedin.com/in/websylvain/"
+        >Sylvain Pastor</a
+      >.
+    </p>
   </footer>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style>
 @import "./assets/base.css";
@@ -40,11 +35,10 @@ header nav {
   justify-content: center;
   width: 100%;
 }
-  
+
 main {
   margin-bottom: 50px;
 }
-
 
 footer {
   padding: 15px 0;
@@ -63,7 +57,7 @@ a,
 }
 
 @media (hover: hover) {
-/*  a:hover {
+  /*  a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }*/
 }
