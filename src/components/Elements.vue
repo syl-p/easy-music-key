@@ -1,4 +1,10 @@
 <template>
+  <nav>
+    <ul>
+      <li>Degrés</li>
+      <li>Modes</li>
+    </ul>
+  </nav>
   <ul class="elements">
     <li
       v-for="(element, index) in scale.modes"

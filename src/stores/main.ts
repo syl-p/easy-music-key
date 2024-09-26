@@ -1,17 +1,20 @@
-import {defineStore} from "pinia";
-import {ref} from "vue";
+import { defineStore } from "pinia";
+import { ref } from "vue";
 import TonePlayerClass from "@/tone-player.class";
 import ScaleClass from "@/scale.class";
 
-export const useStore = defineStore('store', () => {
-const tone_temp = new TonePlayerClass();
+export const useStore = defineStore("store", () => {
   const scale = ref(new ScaleClass("C"));
-    const tone = ref(tone_temp)
+  const tone = ref<TonePlayerClass | null>(null);
 
-    const setScale = (key: string) => {
-        console.log("setScale")
-        scale.value = new ScaleClass(key);
-    }
+  const setScale = (key: string) => {
+    scale.value = new ScaleClass(key);
+  };
 
-  return { scale, tone, setScale };
+  const initTone = async () => {
+    const tone_temp = new TonePlayerClass();
+    tone.value = tone_temp;
+  };
+
+  return { scale, initTone, tone, setScale };
 });
