@@ -1,13 +1,8 @@
 import * as Tone from "tone";
 
 export default class TonePlayerClass {
-  private synth: Tone.Synth;
-  private poly_synth: Tone.PolySynth;
-
-  constructor() {
-    this.synth = new Tone.Synth().toDestination();
-    this.poly_synth = new Tone.PolySynth().toDestination();
-  }
+  static synth: Tone.Synth = new Tone.Synth().toDestination();
+  static poly_synth: Tone.PolySynth = new Tone.PolySynth().toDestination();
 
   private two_octave_notes_range: string[] = [
     "Cb4",
@@ -50,10 +45,13 @@ export default class TonePlayerClass {
     "C6",
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {}
+
   public play_chord(notes: string[]) {
     const now = Tone.now();
     this.play_note_by_note(notes, now);
-    this.poly_synth.triggerAttackRelease(
+    TonePlayerClass.poly_synth.triggerAttackRelease(
       this.check_alteration_font_and_add_octaves(notes),
       1,
       now + 2
@@ -61,10 +59,14 @@ export default class TonePlayerClass {
   }
 
   public play_note_by_note(notes: string[], time?: number) {
-    console.log(notes);
     const now = time ? time : Tone.now();
     this.check_alteration_font_and_add_octaves(notes).forEach((note, index) => {
-      this.synth.triggerAttackRelease(note, "8n", now + index / 2, 0.6);
+      TonePlayerClass.synth.triggerAttackRelease(
+        note,
+        "8n",
+        now + index / 2,
+        0.6
+      );
     });
   }
 

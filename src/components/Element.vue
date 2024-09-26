@@ -9,7 +9,13 @@
           {{ degree.notation }} <small>{{ mode.name }}</small>
         </template>
       </span>
-      <button @click.prevent="playSound(mode.notes)">Ecouter</button>
+      <button
+        @click.prevent="
+          playSound(route.params.view === 'mode' ? mode.notes : degree.notes)
+        "
+      >
+        Ecouter
+      </button>
     </h2>
     <ul>
       <li v-for="note in mode.notes" :key="note">

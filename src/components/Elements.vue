@@ -1,8 +1,8 @@
 <template>
   <nav>
     <ul>
-      <li>Degrés</li>
-      <li>Modes</li>
+      <li><RouterLink :to="scale.key + '/degree'">Degree</RouterLink></li>
+      <li><RouterLink :to="scale.key + '/mode'">Mode</RouterLink></li>
     </ul>
   </nav>
   <ul class="elements">
@@ -25,6 +25,7 @@
 import Element from "@/components/Element.vue";
 import { computed } from "vue";
 import { useStore } from "@/stores/main";
+import { RouterLink } from "vue-router";
 const store = useStore();
 const scale = computed(() => store.scale);
 </script>

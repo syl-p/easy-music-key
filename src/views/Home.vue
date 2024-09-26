@@ -39,7 +39,7 @@ const route = useRoute();
 watch(
   () => route.params.key,
   async (newKey) => {
-    setScale(newKey as string);
+    if (newKey) setScale(newKey as string);
   },
   { immediate: true }
 );

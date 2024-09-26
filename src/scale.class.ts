@@ -188,7 +188,7 @@ export default class ScaleClass {
   public degrees: { notation: string; roman: string }[];
   public modes: { name: string; notes: string[] }[];
 
-  constructor(key: string) {
+  constructor(key = "C") {
     this.key = key;
     this.all_notes = ScaleClass.get_major_scale_from_key(key);
     this.degrees = ScaleClass.get_degrees(key);
