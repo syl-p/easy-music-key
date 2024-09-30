@@ -14,7 +14,8 @@
           playSound(route.params.view === 'mode' ? mode.notes : degree.notes)
         "
       >
-        Ecouter
+        <i class="mdi mdi-volume-high"></i>
+        <span>Ecouter</span>
       </button>
     </h2>
     <ul>
@@ -62,6 +63,21 @@ async function playSound(notes: string[]) {
 .element h2 {
   display: flex;
   justify-content: center;
+}
+
+.element button {
+  background-color: transparent;
+  border: none;
+  color: var(--vt-c-green);
+  cursor: pointer;
+}
+
+.element button i {
+  font-size: 25px;
+}
+
+.element button span {
+  display: none;
 }
 
 .element h2 span {

@@ -1,7 +1,25 @@
 <template>
-  <main>
+  <aside class="keys">
+    <h2>
+      {{ route.params.key ? route.params.key : "pick a key" }}
+    </h2>
+    <ul class="keys-list">
+      <li v-for="item in keys" :key="item">
+        <RouterLink
+          :to="{
+            name: 'keyTable',
+            params: {
+              key: item,
+            },
+          }"
+          >{{ item }}</RouterLink
+        >
+      </li>
+    </ul>
+  </aside>
+  <section>
     <RouterView />
-  </main>
+  </section>
   <footer class="footer_copyright text-center">
     <p>
       Built with <span class="text-error">♥</span> by
@@ -12,7 +30,26 @@
   </footer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRoute } from "vue-router";
+const route = useRoute();
+
+const keys = [
+  "F",
+  "C",
+  "G",
+  "D",
+  "A",
+  "E",
+  "B",
+  "B♭",
+  "E♭",
+  "A♭",
+  "D♭",
+  "G♭",
+  "C♭",
+];
+</script>
 
 <style>
 @import "./assets/base.css";
@@ -20,33 +57,17 @@
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: auto;
   font-weight: normal;
-}
-
-header {
-  margin-bottom: 2rem;
-}
-
-header nav {
   display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-main {
-  margin-bottom: 50px;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 100vh;
 }
 
 footer {
   padding: 15px 0;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+  text-align: center;
 }
 
 a,
@@ -56,26 +77,40 @@ a,
   transition: 0.4s;
 }
 
-@media (hover: hover) {
-  /*  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }*/
+aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+.keys-list {
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  list-style: none;
+}
 
-  main {
-    display: grid;
-    grid-template-columns: 0.7fr 2fr;
-    padding: 0 2rem;
-  }
+.keys-list li a {
+  font-size: 1.4rem;
+  padding-left: 0.5rem;
+  color: var(--vt-c-light);
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.keys-list li a.router-link-active {
+  color: var(--vt-c-green);
+}
+
+.keys h2 {
+  font-size: 100px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  line-height: 100px;
+  color: var(--vt-c-green);
+  text-align: center;
 }
 </style>
